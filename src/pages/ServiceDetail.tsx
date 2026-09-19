@@ -1,0 +1,220 @@
+import { Link, Navigate, useParams } from 'react-router-dom'
+import { Check, ChevronRight, Info } from 'lucide-react'
+import { getService, serviceCategories, servicesByCategory } from '../data/services'
+import { categoryHref } from '../data/navigation'
+import { Section } from '../components/ui/Section'
+import { Container } from '../components/ui/Container'
+import { SectionHeading } from '../components/ui/SectionHeading'
+import { ServiceCard } from '../components/ui/ServiceCard'
+import { Reveal } from '../components/ui/Reveal'
+import { Media } from '../components/ui/Media'
+import { ScriptAccent } from '../components/ui/ScriptAccent'
+import { ButtonLink } from '../components/ui/Button'
+import { Eyebrow } from '../components/ui/Eyebrow'
+import { ProcessSection } from '../components/sections/ProcessSection'
+import { TestimonialsSection } from '../components/sections/TestimonialsSection'
+import { FaqSection } from '../components/sections/FaqSection'
+import { CtaBand } from '../components/sections/CtaBand'
+
+export const ServiceDetail = () => {
+  const { slug } = useParams<{ slug: string }>()
+  const service = getService(slug)
+
+  if (!service) return <Navigate to="/services" replace />
+
+  const category = serviceCategories.find((entry) => entry.slug === service.category)!
+  const related = servicesByCategory(service.category).filter((item) => item.slug !== service.slug)
+  const Icon = service.icon
+
+  return (
+    <>
+      {/* Breadcrumb */}
+      <div className="border-b border-rose/25 bg-cream">
+        <Container>
+          <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 py-3 text-xs text-ink-soft">
+            <Link to="/" className="hover:text-burgundy">Home</Link>
+            <ChevronRight className="size-3" aria-hidden />
+            <Link to="/services" className="hover:text-burgundy">Services</Link>
+            <ChevronRight className="size-3" aria-hidden />
+            <Link to={categoryHref(category.slug)} className="hover:text-burgundy">
+              {category.title}
+            </Link>
+            <ChevronRight className="size-3" aria-hidden />
+            <span className="font-medium text-burgundy">{service.title}</span>
+          </nav>
+        </Container>
+      </div>
+
+      {/* Hero */}
+      <section className="relative overflow-hidden bg-cream-warm">
+        <div
+          className="pointer-events-none absolute -top-32 -right-24 size-[28rem] rounded-full bg-rose-mist blur-3xl"
+          aria-hidden
+        />
+        <Container width="wide" className="relative py-14 lg:py-20">
+          <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14">
+            <div className="flex flex-col gap-5">
+              <Eyebrow>{category.title}</Eyebrow>
+              <div className="flex items-center gap-4">
+                <span className="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-burgundy text-cream">
+                  <Icon className="size-6" strokeWidth={1.5} aria-hidden />
+                </span>
+                <h1 className="text-3xl font-semibold sm:text-4xl lg:text-5xl">{service.title}</h1>
+              </div>
+              <p className="script text-2xl text-burgundy sm:text-3xl">{service.kicker}</p>
+              <p className="max-w-xl text-base leading-relaxed text-ink-soft">{service.intro}</p>
+              <div className="flex flex-wrap gap-3">
+                <ButtonLink to="/contact" arrow>
+                  Enquire Now
+                </ButtonLink>
+                <ButtonLink to={categoryHref(category.slug)} variant="secondary" arrow>
+                  Related Services
+                </ButtonLink>
+              </div>
+            </div>
+
+            <div className="relative">
+              <Media
+                label={`${service.title} — imagery`}
+                alt=""
+                className="aspect-4/3 w-full rounded-[2rem_999px_999px_2rem] shadow-[var(--shadow-lift)]"
+              />
+            </div>
+          </div>
+
+          <ul className="mt-10 grid grid-cols-2 gap-4 border-t border-rose/30 pt-6 sm:grid-cols-4">
+            {service.highlights.map((highlight) => (
+              <li key={highlight} className="flex items-center gap-2.5">
+                <span className="size-1.5 shrink-0 rounded-full bg-burgundy" aria-hidden />
+                <span className="text-sm font-medium text-ink">{highlight}</span>
+              </li>
+            ))}
+          </ul>
+        </Container>
+      </section>
+
+      {/* Benefits */}
+      <Section tone="cream">
+        <SectionHeading
+          eyebrow="What You Gain"
+          title={
+            <>
+              Why It <span className="script font-normal">Matters</span>
+            </>
+          }
+          body={service.blurb}
+          align="center"
+        />
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {service.benefits.map((benefit, index) => (
+            <Reveal key={benefit.title} delay={index * 80}>
+              <div className="flex h-full flex-col gap-2 rounded-2xl border border-rose/25 bg-cream-warm p-6">
+                <span className="font-display text-2xl font-bold text-burgundy/25">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+                <h3 className="font-display text-base font-semibold text-burgundy">{benefit.title}</h3>
+                <p className="text-sm leading-relaxed text-ink-soft">{benefit.body}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </Section>
+
+      {/* Audience + outcomes */}
+      <Section tone="warm">
+        <div className="grid gap-10 lg:grid-cols-3 lg:gap-14">
+          <div className="flex flex-col gap-5">
+            <Eyebrow>Who It Is For</Eyebrow>
+            <h2 className="text-2xl font-semibold sm:text-3xl">Designed Around You</h2>
+            <ul className="flex flex-col gap-3">
+              {service.audience.map((item) => (
+                <li key={item} className="flex items-start gap-2.5 text-sm text-ink-soft">
+                  <Check className="mt-0.5 size-4 shrink-0 text-burgundy" strokeWidth={2} aria-hidden />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="flex flex-col gap-5">
+            <Eyebrow>What You Take Away</Eyebrow>
+            <h2 className="text-2xl font-semibold sm:text-3xl">Clear, Usable Outcomes</h2>
+            <ul className="flex flex-col gap-3">
+              {service.outcomes.map((item) => (
+                <li key={item} className="flex items-start gap-2.5 text-sm text-ink-soft">
+                  <Check className="mt-0.5 size-4 shrink-0 text-burgundy" strokeWidth={2} aria-hidden />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="flex flex-col justify-center gap-4 rounded-3xl bg-burgundy p-8 text-cream">
+            <ScriptAccent size="md" className="text-cream">
+              Small Steps.
+              <br />
+              Big Futures.
+            </ScriptAccent>
+            <p className="text-sm text-cream/75">
+              Tell us where you are and we will tell you honestly whether this is the right place to
+              start.
+            </p>
+            <ButtonLink to="/contact" variant="onDark" arrow className="self-start">
+              Talk to Us
+            </ButtonLink>
+          </div>
+        </div>
+      </Section>
+
+      {service.note && (
+        <Section tone="cream" width="narrow" className="py-12">
+          <div className="flex flex-col gap-3 rounded-2xl border border-rose/40 bg-cream-warm p-7">
+            <div className="flex items-center gap-2.5">
+              <Info className="size-4 shrink-0 text-burgundy" strokeWidth={1.8} aria-hidden />
+              <h2 className="font-display text-base font-semibold text-burgundy">
+                {service.note.title}
+              </h2>
+            </div>
+            <p className="text-sm leading-relaxed text-ink-soft">{service.note.body}</p>
+          </div>
+        </Section>
+      )}
+
+      <ProcessSection
+        steps={service.process}
+        title={
+          <>
+            What You Can <span className="script font-normal">Expect</span>
+          </>
+        }
+      />
+
+      {related.length > 0 && (
+        <Section tone="warm">
+          <SectionHeading
+            eyebrow="Related Services"
+            title={
+              <>
+                More in <span className="script font-normal">{category.title}</span>
+              </>
+            }
+            action={{ label: 'View All Services', to: '/services' }}
+          />
+          <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {related.slice(0, 4).map((item, index) => (
+              <Reveal key={item.slug} delay={index * 70}>
+                <ServiceCard service={item} className="h-full" />
+              </Reveal>
+            ))}
+          </div>
+        </Section>
+      )}
+
+      <TestimonialsSection />
+
+      <FaqSection items={service.faqs} />
+
+      <CtaBand />
+    </>
+  )
+}

@@ -1,0 +1,132 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   Fenix Learning Services — Design System
+   Brand colours, typography scale and shared primitives.
+   ------------------------------------------------------------------ */
+
+@theme {
+  /* --- Brand palette (from the brand colour system) --- */
+  --color-burgundy: #691420;          /* PRIMARY      — Deep Burgundy   */
+  --color-burgundy-deep: #4a0d17;     /* pressed / gradient end         */
+  --color-burgundy-soft: #8c2532;     /* hover / gradient start         */
+  --color-cream: #f1f1e8;             /* PRIMARY LIGHT — Creamy White    */
+  --color-cream-warm: #fdf9f4;        /* page base, warm tint of cream   */
+  --color-rose: #ac8e85;              /* SECONDARY ACCENT — Muted Rose   */
+  --color-rose-soft: #e7d8d2;         /* tinted surfaces                 */
+  --color-rose-mist: #f6ece8;         /* icon wells, quiet fills         */
+  --color-midnight: #1e202b;          /* DARK FOUNDATION — Midnight      */
+  --color-midnight-soft: #2b2e3d;     /* raised surfaces on dark         */
+  --color-sage: #818362;              /* SUPPORTING ACCENT — Sage Green  */
+  --color-sage-soft: #e4e5da;
+
+  /* --- Ink --- */
+  --color-ink: #1e202b;
+  --color-ink-muted: #5a5d68;
+  --color-ink-soft: #6f7280;
+
+  /* --- Typography ---
+     League Spartan : major headings, hero statements, quotes, brand messaging
+     Garet          : body copy, navigation, buttons, forms, FAQs, descriptions
+                      (Garet is a licensed font — drop the webfont files into
+                       /public/fonts and the @font-face below picks them up.
+                       Jost is the metric-compatible fallback until then.)
+     Cormorant      : the italic script accents used across the layouts        */
+  --font-display: "League Spartan", "Jost", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Garet", "Jost", ui-sans-serif, system-ui, sans-serif;
+  --font-accent: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+
+  /* --- Motion --- */
+  --ease-brand: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* --- Elevation --- */
+  --shadow-card: 0 1px 2px rgb(30 32 43 / 0.04), 0 12px 32px -12px rgb(30 32 43 / 0.12);
+  --shadow-lift: 0 2px 4px rgb(30 32 43 / 0.05), 0 24px 48px -20px rgb(105 20 32 / 0.25);
+  --shadow-menu: 0 24px 64px -24px rgb(30 32 43 / 0.28);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    background-color: var(--color-cream-warm);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    line-height: 1.65;
+  }
+
+  h1, h2, h3, h4, h5 {
+    font-family: var(--font-display);
+    color: var(--color-midnight);
+    line-height: 1.08;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+
+  p { text-wrap: pretty; }
+
+  ::selection {
+    background-color: var(--color-burgundy);
+    color: var(--color-cream);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-burgundy);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* Small burgundy label that opens most sections, e.g. "— OUR SERVICES —" */
+  .eyebrow {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--color-burgundy);
+  }
+
+  /* The italic phrases that sit beside imagery */
+  .script {
+    font-family: var(--font-accent);
+    font-style: italic;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: 0.005em;
+  }
+
+  /* Hairline rule used beside eyebrows */
+  .rule {
+    height: 1px;
+    background: linear-gradient(to right, var(--color-rose), transparent);
+  }
+}
+
+@utility surface-arc {
+  /* The soft arc that frames hero imagery throughout the brand layouts */
+  border-radius: 999px 0 0 999px;
+}
+
+/* Marquee for the trusted-by strip */
+@keyframes fenix-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes fenix-rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
