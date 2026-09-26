@@ -9,6 +9,7 @@ export const site = {
     email: 'sumeet@fenixlearningservices.com',
     phone: '+91 99308 78328',
     phoneHref: 'tel:+919930878328',
+    whatsappHref: `https://wa.me/919930878328?text=${encodeURIComponent('Hi Fenix, I would like to know more about your services.')}`,
     location: 'Bengaluru, India',
   },
   social: [
@@ -18,10 +19,3 @@ export const site = {
     { label: 'YouTube', href: 'https://www.youtube.com', icon: 'youtube' },
   ],
 } as const
-
-export const stats = [
-  { value: '500+', label: 'Students Guided', icon: 'users' },
-  { value: '50+', label: 'Training Programmes', icon: 'presentation' },
-  { value: '15+', label: 'Partner Institutions', icon: 'building' },
-  { value: '95%', label: 'Positive Feedback', icon: 'star' },
-] as const

@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Mail, MapPin, Phone } from 'lucide-react'
 import { SocialIcon } from '../ui/SocialIcon'
+import { Logo } from './Logo'
 import { footerNav } from '../../data/navigation'
 import { site } from '../../data/site'
 
@@ -25,22 +26,10 @@ export const Footer = () => (
       <div className="grid gap-12 lg:grid-cols-[1.4fr_1fr_1.2fr_1.1fr]">
         {/* Logo + tagline */}
         <div className="flex flex-col gap-5">
-          <Link to="/" aria-label={`${site.name} — home`} className="flex items-center gap-2.5">
-            <svg viewBox="0 0 40 40" className="size-10" aria-hidden>
-              <circle cx="20" cy="20" r="18.5" fill="none" strokeWidth="1.2" className="stroke-cream/30" />
-              <path
-                d="M20 8c3.6 3.4 5.6 6.6 5.6 9.8 0 2-.9 3.7-2.4 4.9.5-1.7.3-3.3-.7-4.8-.5 3.7-2.6 5.2-4.6 7-1.8 1.6-2.7 3.2-2.7 5 0 3.3 2.6 6 5.9 6.1-4.9.5-9.1-3.2-9.1-8 0-2.6 1-4.7 3.3-7.3 3-3.4 4.4-6 4.7-12.7Z"
-                className="fill-rose-soft"
-              />
-            </svg>
-            <span className="flex flex-col leading-none">
-              <span className="font-display text-xl font-bold tracking-[0.12em] text-cream">FENIX</span>
-              <span className="text-[0.55rem] font-medium tracking-[0.3em] text-cream/60">
-                LEARNING SERVICES
-              </span>
-            </span>
-          </Link>
-          <p className="script text-xl text-rose-soft">{site.tagline}</p>
+          {/* The artwork is drawn for light grounds, so it sits on a cream plate. */}
+          <div className="self-start rounded-2xl bg-white px-6 py-5">
+            <Logo variant="compact" />
+          </div>
           <p className="max-w-sm text-sm leading-relaxed text-cream/60">{site.summary}</p>
           <ul className="flex gap-3">
             {site.social.map((item) => (
@@ -72,6 +61,17 @@ export const Footer = () => (
                 <a href={site.contact.phoneHref} className="flex items-center gap-2.5 hover:text-cream">
                   <Phone className="size-4 shrink-0 text-rose-soft" aria-hidden />
                   {site.contact.phone}
+                </a>
+              </li>
+              <li>
+                <a
+                  href={site.contact.whatsappHref}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center gap-2.5 hover:text-cream"
+                >
+                  <SocialIcon name="whatsapp" className="shrink-0 text-rose-soft" />
+                  WhatsApp
                 </a>
               </li>
               <li>

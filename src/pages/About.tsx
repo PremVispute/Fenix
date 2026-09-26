@@ -3,10 +3,10 @@ import { Section } from '../components/ui/Section'
 import { SectionHeading } from '../components/ui/SectionHeading'
 import { Eyebrow } from '../components/ui/Eyebrow'
 import { Media } from '../components/ui/Media'
+import { images } from '../data/images'
 import { ScriptAccent } from '../components/ui/ScriptAccent'
 import { Reveal } from '../components/ui/Reveal'
 import { ButtonLink } from '../components/ui/Button'
-import { StatBand } from '../components/ui/StatBand'
 import { PageHero } from '../components/sections/PageHero'
 import { CtaBand } from '../components/sections/CtaBand'
 import { credentials, differentiators, values } from '../data/content'
@@ -36,7 +36,7 @@ const areasOfWork = [
   },
   {
     title: 'Assessments & Career Exploration',
-    body: 'DMIT, Psychometric / RAISEC, Growing Mind Assessment and IRIS Analysis.',
+    body: 'DMIT, Psychometric / RIASEC, Growing Mind Assessment and IRIS Analysis.',
   },
   {
     title: 'Skill Development',
@@ -48,7 +48,7 @@ const areasOfWork = [
   },
   {
     title: 'IELTS Training',
-    body: 'Personalised preparation across Listening, Reading, Writing and Speaking.',
+    body: 'Structured preparation across Listening, Reading, Writing and Speaking.',
   },
 ]
 
@@ -90,6 +90,7 @@ export const About = () => (
         </>
       }
       mediaLabel="Sunrise — new perspectives"
+      mediaSrc={images.aboutHero}
       compact
     />
 
@@ -217,6 +218,7 @@ export const About = () => (
       <div className="grid lg:grid-cols-[0.9fr_1.1fr]">
         <div className="relative">
           <Media
+            src={images.founderPortrait}
             label="Founder portrait — Sumeet Bhatia"
             alt="Portrait of Sumeet Bhatia, founder of Fenix Learning Services"
             className="h-full min-h-[22rem] w-full"
@@ -238,6 +240,11 @@ export const About = () => (
               Fenix Learning Services is a founder-led learning and development practice, allowing
               clients to work directly with the professional leading their counselling and training
               engagements.
+            </p>
+            <p>
+              Sumeet is a hospitality professional with 25 years of experience in the hotel
+              industry, having opened 9 star-category hotels across India and turned around many a
+              sick hotel unit into a profitable venture.
             </p>
             <p>
               Sumeet Bhatia’s professional journey spans hospitality, travel, training and career
@@ -277,20 +284,6 @@ export const About = () => (
         ))}
       </ul>
     </Section>
-
-    <Section tone="warm" className="py-12">
-      <SectionHeading
-        eyebrow="Our Impact"
-        title={
-          <>
-            Real People. <span className="script font-normal">Real Progress.</span>
-          </>
-        }
-        body="Over the years we have guided students, professionals and organisations towards meaningful growth and success."
-        align="center"
-      />
-    </Section>
-    <StatBand />
 
     {/* What makes Fenix different */}
     <Section tone="cream">

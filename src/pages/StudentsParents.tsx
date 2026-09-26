@@ -5,8 +5,9 @@ import { SectionHeading } from '../components/ui/SectionHeading'
 import { ServiceCard } from '../components/ui/ServiceCard'
 import { Reveal } from '../components/ui/Reveal'
 import { Media } from '../components/ui/Media'
+import { images } from '../data/images'
 import { ScriptAccent } from '../components/ui/ScriptAccent'
-import { StatBand } from '../components/ui/StatBand'
+import { QuoteBand } from '../components/ui/QuoteBand'
 import { PageHero } from '../components/sections/PageHero'
 import { ProcessSection } from '../components/sections/ProcessSection'
 import { TestimonialsSection } from '../components/sections/TestimonialsSection'
@@ -108,6 +109,7 @@ export const StudentsParents = () => (
         </>
       }
       mediaLabel="Student and parent"
+      mediaSrc={images.studentsHero}
       compact
     />
 
@@ -206,6 +208,7 @@ export const StudentsParents = () => (
         </div>
         <div className="relative flex flex-col gap-4">
           <Media
+            src={images.studentsParentChild}
             label="Parent and child"
             alt=""
             tone="sage"
@@ -219,7 +222,7 @@ export const StudentsParents = () => (
       </div>
     </Section>
 
-    <StatBand quote="Guiding you at every step, from self-discovery to success." />
+    <QuoteBand quote="Guiding you at every step, from self-discovery to success." />
 
     <ProcessSection
       steps={simpleApproach}

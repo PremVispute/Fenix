@@ -1,4 +1,5 @@
 import type { LucideIcon } from 'lucide-react'
+import { images, videos } from './images'
 import {
   Award,
   BookOpen,
@@ -36,12 +37,16 @@ export interface Service {
   /** Longer intro for the detail page */
   intro: string
   icon: LucideIcon
+  /** Detail-page hero image */
+  image?: string
+  /** Tailwind object-position class to keep the subject in frame */
+  imagePosition?: string
   /** Four-up value points on the detail page */
   benefits: { title: string; body: string }[]
   /** Who the service is designed for */
   audience: string[]
   /** What a participant walks away with */
-  outcomes: string[]
+  outcomes?: string[]
   /** Short labels rendered as a strip under the detail hero */
   highlights: string[]
   /** Page-specific process steps; falls back to the shared four when absent */
@@ -50,6 +55,26 @@ export interface Service {
   faqs?: { question: string; answer: string }[]
   /** Scope or safeguarding note shown as a callout on the detail page */
   note?: { title: string; body: string }
+  /** Biometric-data reassurance shown prominently on the detail page */
+  dataNotice?: string
+  /** Explainer for the model behind an assessment, shown before the benefits */
+  framework?: {
+    eyebrow: string
+    title: string
+    accent: string
+    body: string
+    items: { title: string; body: string }[]
+    /** Explainer video shown under the framework items */
+    video?: string
+  }
+  /** Overrides the "What You Gain" label above the benefits */
+  benefitsEyebrow?: string
+  /** Pointer to a companion service, shown after the process */
+  crossLink?: { eyebrow: string; body: string; label: string; to: string }
+  /** Page-specific closing call to action */
+  cta?: { title: string; accent: string; body: string; label: string }
+  /** Condensed detail page: the definition, a video and an enquiry button only */
+  video?: { src?: string; poster?: string }
 }
 
 export interface ServiceCategory {
@@ -57,6 +82,8 @@ export interface ServiceCategory {
   title: string
   blurb: string
   icon: LucideIcon
+  /** Category-page hero image */
+  image?: string
   /** Category-page hero and body copy, where approved copy exists for it */
   page?: {
     heroTitle: string
@@ -83,6 +110,7 @@ export const serviceCategories: ServiceCategory[] = [
     blurb:
       'Understand yourself better and explore possibilities through assessment-based insights and personalised career guidance.',
     icon: Compass,
+    image: images.assessmentsHero,
     page: {
       heroTitle: 'Understand Yourself.',
       heroAccent: 'Explore Your Possibilities.',
@@ -182,7 +210,7 @@ export const serviceCategories: ServiceCategory[] = [
     slug: 'language-training',
     title: 'Language Training',
     blurb:
-      'Prepare for IELTS with structured, personalised training across all four areas of the test.',
+      'Prepare for IELTS with structured training across all four areas of the test.',
     icon: Languages,
     page: {
       heroTitle: 'Build Your English.',
@@ -255,7 +283,10 @@ export const services: Service[] = [
     intro:
       'Every individual has a different way of learning, responding and approaching challenges. Fenix offers DMIT-based assessment as an exploratory tool to provide additional perspectives on learning styles, strengths, personality-related characteristics and career-related interests.',
     icon: Fingerprint,
+    image: images.services.dmit,
     highlights: ['Learning Styles', 'Multiple Intelligences', 'Personality Insights', 'Career Interests'],
+    dataNotice:
+      'Your fingerprints are never stored. Fingerprint scans taken for the DMIT assessment are used only to generate your report and are permanently deleted afterwards \u2014 Fenix does not keep, store or share any biometric data.',
     benefits: [
       { title: 'Learning Styles', body: 'Explore different approaches to learning and information processing.' },
       { title: 'Multiple Intelligences', body: 'Explore different areas of individual strengths and potential.' },
@@ -298,6 +329,11 @@ export const services: Service[] = [
           'Not necessarily. You can take the assessment independently. Counselling can be useful if you want help interpreting the insights in relation to academic or career decisions.',
       },
       {
+        question: 'Are my fingerprints stored?',
+        answer:
+          'No. Fingerprint scans are used only to generate your report and are permanently deleted afterwards. Fenix does not keep, store or share any biometric data.',
+      },
+      {
         question: 'What does the assessment cover?',
         answer:
           'The Fenix DMIT offering covers areas such as learning styles, multiple intelligences, personality-related characteristics, strengths, leadership potential and career-related interests.',
@@ -312,65 +348,97 @@ export const services: Service[] = [
 
   {
     slug: 'psychometric-assessment',
-    title: 'Psychometric / RAISEC Assessment',
+    title: 'Psychometric / RIASEC Assessment',
     category: 'assessments-career',
-    kicker: 'Find What Interests You',
+    kicker: 'Find What Interests You. Explore Where It Could Lead.',
     blurb:
-      'Understand your interests and personality-related preferences to explore career possibilities with greater clarity.',
+      'Understanding what naturally interests you can be a useful starting point when exploring education, careers and professional possibilities.',
     intro:
-      'Choosing a career is not only about marks or qualifications. Understanding what interests you, how you prefer to work and the environments that appeal to you can provide another perspective when exploring your options. The RAISEC framework looks at six broad interest areas.',
+      'Understanding what naturally interests you can be a useful starting point when exploring education, careers and professional possibilities. The RIASEC framework helps explore career interests across six broad areas, providing another perspective when thinking about potential career directions.',
     icon: Sparkles,
-    highlights: ['Interests', 'Preferences', 'Career Exploration', 'Development Areas'],
+    image: images.services.psychometric,
+    highlights: ['Career Interests', 'Personal Preferences', 'Career Possibilities', 'Areas for Development'],
+    framework: {
+      eyebrow: 'What Is RIASEC?',
+      title: 'A Framework for Exploring',
+      accent: 'Career Interests',
+      body: 'RIASEC represents six broad areas of career interest.',
+      items: [
+        { title: 'Realistic', body: 'Interest in practical, hands-on activities, working with tools, objects, machines or physical environments.' },
+        { title: 'Investigative', body: 'Interest in exploring ideas, analysing information, solving problems and understanding how things work.' },
+        { title: 'Artistic', body: 'Interest in creativity, self-expression, design, writing, art and innovative ideas.' },
+        { title: 'Social', body: 'Interest in helping, supporting, teaching, guiding and working with people.' },
+        { title: 'Enterprising', body: 'Interest in leadership, initiative, persuasion, decision-making, business and influencing others.' },
+        { title: 'Conventional', body: 'Interest in organisation, structure, information, systems, accuracy and working with established processes.' },
+      ],
+    },
+    benefitsEyebrow: 'What Can RIASEC Help You Explore?',
     benefits: [
-      { title: 'Realistic', body: 'Interest in practical, hands-on activities, tools, equipment and working with things.' },
-      { title: 'Artistic', body: 'Interest in creativity, expression, ideas, design and creating something original.' },
-      { title: 'Investigative', body: 'Interest in exploring ideas, analysing information, solving problems and understanding how things work.' },
-      { title: 'Social', body: 'Interest in helping, supporting, teaching and working with people.' },
-      { title: 'Enterprising', body: 'Interest in leadership, persuasion, business, initiative and taking action.' },
-      { title: 'Conventional', body: 'Interest in organisation, structure, information, systems and detail-oriented activities.' },
+      { title: 'Career Interests', body: 'Understand the types of activities and work environments that may naturally appeal to you.' },
+      { title: 'Personal Preferences', body: 'Explore patterns in the way you prefer to approach activities, problems and interactions.' },
+      { title: 'Career Possibilities', body: 'Use your interest profile as one starting point when exploring different educational and career options.' },
+      { title: 'Areas for Development', body: 'Identify areas you may want to explore further as you build your skills and experience.' },
     ],
     audience: [
-      'Students \u2014 exploring interests and possible directions while making academic and subject choices',
-      'College students and graduates \u2014 weighing higher education, career options or the transition into work',
-      'Professionals \u2014 reflecting on interests and preferences when considering a change in direction',
+      'School students \u2014 explore interests while considering subjects, courses and future career options',
+      'College students \u2014 gain another perspective while exploring career paths and professional possibilities',
+      'Graduates & young professionals \u2014 reflect on career interests when considering new directions or opportunities',
+      'Anyone exploring a career change \u2014 use career-interest insights as one part of a broader career exploration process',
     ],
-    outcomes: [
-      'A RAISEC profile covering the six interest areas',
-      'Additional perspectives on interests, preferences and areas for development',
-      'A review of the results and the areas they highlight',
-    ],
+    note: {
+      title: 'Your interests are a starting point.',
+      body: 'A RIASEC profile does not determine what career you should choose. Your career decisions can also be influenced by your abilities, values, personality, education, skills, experiences, opportunities and personal goals. The assessment is intended to provide another perspective \u2014 one that can be explored further through reflection and, where appropriate, career counselling.',
+    },
     process: [
-      { title: 'Understand', body: 'We discuss what you are hoping to explore.' },
-      { title: 'Assess', body: 'You complete the relevant psychometric assessment.' },
-      { title: 'Explore', body: 'We review the results together and understand the areas highlighted.' },
-      { title: 'Plan', body: 'The insights become one part of your broader career exploration and decision-making.' },
+      { title: 'Explore', body: 'Complete the RIASEC assessment based on your interests and preferences.' },
+      { title: 'Understand', body: 'Review the resulting interest profile and what the different areas represent.' },
+      { title: 'Reflect', body: 'Consider how the results relate to your experiences, strengths and aspirations.' },
+      { title: 'Explore Further', body: 'Use the insights alongside other relevant information when considering educational or career possibilities.' },
     ],
+    crossLink: {
+      eyebrow: 'RIASEC & Career Counselling',
+      body: 'RIASEC can be used as part of a broader career exploration process. When combined with career counselling, the results can be discussed alongside your academic background, skills, interests, goals and future plans.',
+      label: 'Explore Career Counselling',
+      to: '/services/assessments-career/career-counselling',
+    },
     faqs: [
       {
-        question: 'Does the assessment tell me which career I should choose?',
+        question: 'What does RIASEC stand for?',
         answer:
-          'No. It provides additional perspectives on interests and personality-related preferences that can support broader career exploration.',
+          'RIASEC represents six career-interest areas: Realistic, Investigative, Artistic, Social, Enterprising and Conventional.',
       },
       {
-        question: 'Is RAISEC only for students?',
+        question: 'Does RIASEC tell me which career I should choose?',
         answer:
-          'No. It can also be useful for graduates and professionals exploring career development or a change in direction.',
+          'No. It provides insights into career interests and preferences but does not determine a specific career choice.',
       },
       {
-        question: 'Can I take the assessment without career counselling?',
+        question: 'Who can take a RIASEC assessment?',
         answer:
-          'Yes. The assessment can be undertaken independently. Counselling can be added if you would like support connecting the insights with your academic or career plans.',
+          'It can be useful for students, graduates, young professionals and individuals exploring career options or possible career changes.',
       },
       {
-        question: 'What are the six RAISEC areas?',
-        answer: 'Realistic, Artistic, Investigative, Social, Enterprising and Conventional.',
+        question: 'Can RIASEC be used for students?',
+        answer:
+          'Yes. It can be used as one source of information while students explore subjects, education and potential career directions.',
       },
       {
-        question: 'What happens after the assessment?',
+        question: 'Can I take RIASEC without career counselling?',
         answer:
-          'The results can be reviewed and understood in context, with relevant next steps explored based on your goals.',
+          'Yes. The assessment can be taken independently, although counselling can provide an opportunity to discuss the results in greater context.',
+      },
+      {
+        question: 'What should I do after receiving my results?',
+        answer:
+          'Use the results as a starting point for reflection and further career exploration. Where appropriate, you can discuss them as part of career counselling.',
       },
     ],
+    cta: {
+      title: 'Ready to Explore Your',
+      accent: 'Interests?',
+      body: 'Your interests can offer valuable clues about the environments and activities you may enjoy. Start exploring what interests you and where those interests could lead.',
+      label: 'Take the Next Step',
+    },
   },
 
   {
@@ -381,8 +449,9 @@ export const services: Service[] = [
     blurb:
       'A structured way to explore parent-child perspectives, behavioural patterns and areas of development.',
     intro:
-      'Children and parents can sometimes see the same situation differently. The parent and child complete their respective assessments, allowing the results to highlight areas of similarity, difference and potential communication gaps \u2014 which can then be discussed in the context of the child\u2019s development and the parent-child relationship.',
+      'Fenix Learning Services has tied up with Ospira Technologies to bring you this test \u2014 a patented psychometric test (patent application submitted and cleared) undertaken by both a parent and the child. Based on their inputs, it helps them find their connects and differences, and how the gaps can be bridged within the family.',
     icon: Leaf,
+    image: images.services.growingMind,
     highlights: ['Understanding', 'Communication', 'Behavioural Patterns', 'Connection'],
     benefits: [
       { title: 'Understanding', body: 'Gain additional perspectives on how your child may see and respond to different situations.' },
@@ -455,6 +524,9 @@ export const services: Service[] = [
       'IRIS Analysis involves capturing images of the iris and using an assessment system to generate insights relating to personality, strengths and behavioural characteristics. At Fenix it is positioned as a tool for self-understanding and personal exploration, rather than as a definitive measure of anyone\u2019s abilities, personality or future.',
     icon: Eye,
     highlights: ['Personality', 'Strengths', 'Behavioural Patterns', 'Personal Development'],
+    dataNotice:
+      'Your iris images are never stored. Images captured for the IRIS Analysis are used only to generate your report and are permanently deleted afterwards \u2014 Fenix does not keep, store or share any biometric data.',
+    video: { src: videos.iris },
     benefits: [
       { title: 'Personality-Related Characteristics', body: 'Gain additional perspectives on characteristics that may influence how you approach situations and interact with others.' },
       { title: 'Strengths', body: 'Explore areas that may support your personal development and self-awareness.' },
@@ -523,6 +595,7 @@ export const services: Service[] = [
     intro:
       'Choosing subjects, courses or a career path can feel overwhelming \u2014 especially when there are too many options or too little clarity. Fenix Learning Services provides personalised career counselling to help students, young adults and professionals explore their interests, strengths, possibilities and next steps.',
     icon: Briefcase,
+    image: images.services.careerCounselling,
     highlights: ['Academic Choices', 'Career Exploration', 'Higher Education', 'Skill Development'],
     benefits: [
       { title: 'Academic & Subject Choices', body: 'Explore possible academic directions based on your interests, strengths and goals.' },
@@ -551,7 +624,7 @@ export const services: Service[] = [
     ],
     note: {
       title: 'Assessments can be part of the journey \u2014 but they do not define your future.',
-      body: 'Where appropriate, Fenix may incorporate assessment-based insights such as DMIT or Psychometric / RAISEC into the broader guidance process. These are considered alongside your academic background, interests, experiences, goals and individual circumstances.',
+      body: 'Where appropriate, Fenix may incorporate assessment-based insights such as DMIT or Psychometric / RIASEC into the broader guidance process. These are considered alongside your academic background, interests, experiences, goals and individual circumstances.',
     },
     faqs: [
       {
@@ -594,6 +667,7 @@ export const services: Service[] = [
     intro:
       'Children don\u2019t always have the words to explain what they are feeling. Changes in behaviour, withdrawal, anxiety, emotional outbursts, academic pressure or difficulty coping can leave parents wondering what is really going on. Fenix helps parents approach these situations with greater awareness and understanding.',
     icon: HeartHandshake,
+    image: images.services.childPsychology,
     highlights: ['Emotional Development', 'Anxiety', 'Resilience', 'Communication'],
     benefits: [
       { title: 'Emotional Development', body: 'Understand how children recognise, express and manage emotions, and why emotional regulation matters in healthy development.' },
@@ -662,6 +736,7 @@ export const services: Service[] = [
     intro:
       'Practical sessions and workshops that help parents understand each stage of development and respond in ways that build trust, confidence and independence.',
     icon: Users,
+    image: images.services.parenting,
     highlights: ['Development', 'Communication', 'Discipline', 'Wellbeing'],
     benefits: [
       { title: 'Stage by Stage', body: 'What to expect, and what is worth acting on, at each age.' },
@@ -682,6 +757,7 @@ export const services: Service[] = [
     intro:
       'Technical knowledge can get you started. The way you communicate, present yourself, work with others and respond to situations can shape how you are experienced in the workplace. Fenix Soft Skills Training focuses on practical skills that support personal effectiveness, professional communication and workplace readiness.',
     icon: MessagesSquare,
+    image: images.services.softSkills,
     highlights: ['Communication', 'Confidence', 'Presentation', 'Teamwork'],
     benefits: [
       { title: 'Communication Skills', body: 'Develop clearer and more effective verbal and interpersonal communication.' },
@@ -749,6 +825,7 @@ export const services: Service[] = [
     intro:
       'Leadership is more than managing people. It involves understanding yourself, communicating with clarity, making thoughtful decisions and bringing people together towards a common goal. Our training focuses on practical leadership behaviours that can be applied in everyday professional situations.',
     icon: Award,
+    image: images.services.leadership,
     highlights: ['Decision Making', 'Communication', 'Collaboration', 'Emotional Intelligence'],
     benefits: [
       { title: 'Leadership & Decision Making', body: 'Build confidence in taking responsibility, evaluating situations and making informed decisions.' },
@@ -810,6 +887,8 @@ export const services: Service[] = [
     intro:
       'Being knowledgeable about a subject is only the beginning. An effective trainer needs to communicate clearly, engage participants, understand different learning needs and create an environment where people can participate, practise and learn. Train the Trainer focuses on developing these capabilities.',
     icon: GraduationCap,
+    image: images.services.trainTheTrainer,
+    imagePosition: 'object-[center_30%]',
     highlights: ['Facilitation', 'Communication', 'Delivery', 'Engagement'],
     benefits: [
       { title: 'Training & Facilitation Skills', body: 'Understand the role of a trainer and develop a structured approach to delivering learning sessions.' },
@@ -875,6 +954,7 @@ export const services: Service[] = [
     intro:
       'Moving from college to the workplace brings a new set of expectations. It is not just about what you know \u2014 it is also about how you communicate, present yourself, work with others and respond to professional situations. This training focuses on developing those practical skills and building greater workplace readiness.',
     icon: Building2,
+    image: images.services.campusToCorporate,
     highlights: ['Communication', 'Interview Skills', 'Workplace Etiquette', 'Confidence'],
     benefits: [
       { title: 'Professional Communication', body: 'Learn to communicate clearly and appropriately in professional environments.' },
@@ -940,6 +1020,7 @@ export const services: Service[] = [
     intro:
       'Every interaction shapes a guest\u2019s experience. From the first welcome to the final farewell, hospitality professionals need strong communication, professional presence, service awareness and the ability to respond confidently to different situations. Our training focuses on practical skills that can be applied across hospitality and guest-service environments.',
     icon: Handshake,
+    image: images.services.hospitality,
     highlights: ['Guest Communication', 'Professional Presence', 'Guest Service', 'Teamwork'],
     benefits: [
       { title: 'Guest Communication', body: 'Develop clear, courteous and confident communication when interacting with guests.' },
@@ -1005,6 +1086,7 @@ export const services: Service[] = [
     intro:
       'IELTS \u2014 the International English Language Testing System \u2014 assesses your ability to use English across academic, professional and everyday contexts through four components. Each area requires a different approach, which is why effective preparation needs to go beyond simply improving spoken English.',
     icon: Globe2,
+    image: images.services.ielts,
     highlights: ['Listening', 'Reading', 'Writing', 'Speaking'],
     benefits: [
       { title: 'Listening', body: 'Develop your ability to understand spoken English, identify key information and respond accurately to different question types.' },
@@ -1069,6 +1151,7 @@ export const services: Service[] = [
     intro:
       'Everyone begins at a different level and may need to focus on different skills. Band Score Training starts from where you currently stand, identifies the areas that require additional practice and works systematically across all four test components towards your required band.',
     icon: BookOpen,
+    image: images.services.ielts,
     highlights: ['Current Level', 'Question Types', 'Test Strategies', 'Target Band'],
     benefits: [
       { title: 'Understand Your Level', body: 'Identify your current strengths and the areas that need improvement.' },

@@ -7,9 +7,10 @@ import { ServiceCategory } from './pages/ServiceCategory'
 import { ServiceDetail } from './pages/ServiceDetail'
 import { StudentsParents } from './pages/StudentsParents'
 import { Corporates } from './pages/Corporates'
-import { Insights } from './pages/Insights'
-import { InsightArticle } from './pages/InsightArticle'
+import { Blogs } from './pages/Blogs'
+import { Gallery } from './pages/Gallery'
 import { Testimonials } from './pages/Testimonials'
+import { Reviews } from './pages/Reviews'
 import { Contact } from './pages/Contact'
 import { Privacy } from './pages/Privacy'
 import { NotFound } from './pages/NotFound'
@@ -27,11 +28,10 @@ const App = () => (
         </Route>
         <Route path="students-parents" element={<StudentsParents />} />
         <Route path="corporates" element={<Corporates />} />
-        <Route path="insights">
-          <Route index element={<Insights />} />
-          <Route path=":slug" element={<InsightArticle />} />
-        </Route>
+        <Route path="blogs" element={<Blogs />} />
+        <Route path="gallery" element={<Gallery />} />
         <Route path="testimonials" element={<Testimonials />} />
+        <Route path="reviews" element={<Reviews />} />
         <Route path="contact" element={<Contact />} />
         <Route path="privacy-policy" element={<Privacy />} />
         <Route path="*" element={<NotFound />} />

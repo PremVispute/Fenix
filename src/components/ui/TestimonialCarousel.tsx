@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { ChevronLeft, ChevronRight, Star } from 'lucide-react'
 import type { Testimonial } from '../../data/content'
 import { cn } from '../../lib/cn'
-import { Media } from './Media'
 
 const Stars = ({ rating }: { rating: number }) => (
   <div className="flex gap-0.5" aria-label={`${rating} out of 5`}>
@@ -16,28 +16,70 @@ const Stars = ({ rating }: { rating: number }) => (
   </div>
 )
 
-export const TestimonialCard = ({ item }: { item: Testimonial }) => (
-  <figure className="flex h-full flex-col gap-4 rounded-2xl border border-rose/25 bg-cream-warm p-6 shadow-[var(--shadow-card)]">
-    <blockquote className="flex-1 text-sm leading-relaxed text-ink-soft">
-      &ldquo;{item.quote}&rdquo;
-    </blockquote>
-    <figcaption className="flex items-center gap-3 border-t border-rose/20 pt-4">
-      <Media
-        label=""
-        alt={item.name}
-        className="size-11 shrink-0 rounded-full"
-        tone="rose"
-      />
-      <div>
-        <p className="font-display text-sm font-semibold text-midnight">{item.name}</p>
-        <p className="text-xs text-ink-soft">{item.role}</p>
-      </div>
-      <div className="ml-auto">
-        <Stars rating={item.rating} />
-      </div>
-    </figcaption>
-  </figure>
-)
+const initials = (name: string) =>
+  name
+    .replace(/\b(Dr|Mr|Mrs|Ms)\.\s*/g, '')
+    .split(/\s+/)
+    .slice(0, 2)
+    .map((word) => word.charAt(0))
+    .join('')
+    .toUpperCase()
+
+/** Quotes longer than this are trimmed in the carousel, with a link to the full text. */
+const LONG_QUOTE = 320
+
+export const TestimonialCard = ({ item, compact = false }: { item: Testimonial; compact?: boolean }) => {
+  const long = compact && item.quote.flat().join(' ').length > LONG_QUOTE
+
+  return (
+    <figure className="flex h-full flex-col gap-4 rounded-2xl border border-rose/25 bg-cream-warm p-6 shadow-[var(--shadow-card)]">
+      <blockquote
+        className={cn(
+          'flex flex-1 flex-col gap-3 text-sm leading-relaxed text-ink-soft',
+          long && 'max-h-52 overflow-hidden [mask-image:linear-gradient(to_bottom,black_70%,transparent)]',
+        )}
+      >
+        {item.quote.map((part, index) =>
+          Array.isArray(part) ? (
+            <ul key={index} className="flex list-disc flex-col gap-1 pl-5">
+              {part.map((point) => (
+                <li key={point}>{point}</li>
+              ))}
+            </ul>
+          ) : (
+            <p key={index}>
+              {index === 0 && '\u201c'}
+              {part}
+              {index === item.quote.length - 1 && '\u201d'}
+            </p>
+          ),
+        )}
+      </blockquote>
+      {long && (
+        <Link to="/testimonials" className="self-start text-xs font-semibold text-burgundy hover:underline">
+          Read full testimonial
+        </Link>
+      )}
+      <figcaption className="flex items-center gap-3 border-t border-rose/20 pt-4">
+        <span
+          className="flex size-11 shrink-0 items-center justify-center rounded-full bg-rose-mist font-display text-sm font-semibold text-burgundy"
+          aria-hidden
+        >
+          {initials(item.name)}
+        </span>
+        <div>
+          <p className="font-display text-sm font-semibold text-midnight">{item.name}</p>
+          {item.role && <p className="text-xs text-ink-soft">{item.role}</p>}
+        </div>
+        {item.rating && (
+          <div className="ml-auto">
+            <Stars rating={item.rating} />
+          </div>
+        )}
+      </figcaption>
+    </figure>
+  )
+}
 
 export const TestimonialCarousel = ({ items }: { items: Testimonial[] }) => {
   const [page, setPage] = useState(0)
@@ -71,7 +113,7 @@ export const TestimonialCarousel = ({ items }: { items: Testimonial[] }) => {
 
         <div className="grid flex-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {visible.map((item) => (
-            <TestimonialCard key={item.name} item={item} />
+            <TestimonialCard key={item.name} item={item} compact />
           ))}
         </div>
 

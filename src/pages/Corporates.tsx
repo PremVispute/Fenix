@@ -5,10 +5,11 @@ import { SectionHeading } from '../components/ui/SectionHeading'
 import { ServiceCard } from '../components/ui/ServiceCard'
 import { Reveal } from '../components/ui/Reveal'
 import { Media } from '../components/ui/Media'
+import { images } from '../data/images'
 import { ScriptAccent } from '../components/ui/ScriptAccent'
 import { ButtonLink } from '../components/ui/Button'
 import { Eyebrow } from '../components/ui/Eyebrow'
-import { StatBand } from '../components/ui/StatBand'
+import { QuoteBand } from '../components/ui/QuoteBand'
 import { PageHero } from '../components/sections/PageHero'
 import { PartnersStrip } from '../components/sections/PartnersStrip'
 import { FaqSection } from '../components/sections/FaqSection'
@@ -129,6 +130,7 @@ export const Corporates = () => (
         </>
       }
       mediaLabel="Corporate training session"
+      mediaSrc={images.corporatesHero}
       compact
     />
 
@@ -157,6 +159,7 @@ export const Corporates = () => (
       <div className="grid items-center gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-14">
         <div className="relative">
           <Media
+            src={images.corporatesWorkshop}
             label="Workshop in progress"
             alt=""
             className="aspect-4/3 w-full rounded-3xl shadow-[var(--shadow-card)]"
@@ -268,7 +271,7 @@ export const Corporates = () => (
       </ul>
     </Section>
 
-    <StatBand quote="Strong people build strong organisations." />
+    <QuoteBand quote="Strong people build strong organisations." />
 
     <PartnersStrip />
 

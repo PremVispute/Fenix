@@ -4,31 +4,41 @@ import {
   Compass,
   Fingerprint,
   Lightbulb,
+  ShieldCheck,
   Target,
   TrendingUp,
 } from 'lucide-react'
 import { coreServiceSlugs, getService, services } from '../data/services'
 import { serviceHref } from '../data/navigation'
-import { differentiators } from '../data/content'
+import { differentiators, processSteps } from '../data/content'
 import { Section } from '../components/ui/Section'
 import { Container } from '../components/ui/Container'
 import { SectionHeading } from '../components/ui/SectionHeading'
 import { Eyebrow } from '../components/ui/Eyebrow'
 import { ButtonLink } from '../components/ui/Button'
 import { Media } from '../components/ui/Media'
+import { images } from '../data/images'
 import { ScriptAccent } from '../components/ui/ScriptAccent'
 import { Reveal } from '../components/ui/Reveal'
-import { StatBand } from '../components/ui/StatBand'
+import { QuoteBand } from '../components/ui/QuoteBand'
 import { PageHero } from '../components/sections/PageHero'
 import { ProcessSection } from '../components/sections/ProcessSection'
 import { FaqSection } from '../components/sections/FaqSection'
 import { PartnersStrip } from '../components/sections/PartnersStrip'
-import { InsightsSection } from '../components/sections/InsightsSection'
 import { TestimonialsSection } from '../components/sections/TestimonialsSection'
 import { CtaBand } from '../components/sections/CtaBand'
 
 const coreServices = coreServiceSlugs.map((slug) => getService(slug)!).filter(Boolean)
 const dmit = getService('dmit-assessment')!
+
+/** The homepage closes the approach on a conversation rather than development. */
+const homeProcess = [
+  ...processSteps.slice(0, 3),
+  {
+    title: 'Discuss',
+    body: 'We talk through the insights, options and next steps with you, so learning turns into practical progress.',
+  },
+]
 
 export const Home = () => (
   <>
@@ -54,6 +64,8 @@ export const Home = () => (
         </>
       }
       mediaLabel="Student portrait — hero"
+      mediaSrc={images.homeHero}
+      mediaClassName="origin-bottom scale-[1.15]"
       chips={[
         { icon: <Target className="size-4" strokeWidth={1.6} aria-hidden />, label: 'Know Your Strengths' },
         { icon: <Lightbulb className="size-4" strokeWidth={1.6} aria-hidden />, label: 'Build Practical Skills' },
@@ -96,7 +108,7 @@ export const Home = () => (
       </div>
     </Section>
 
-    {/* Featured service — DMIT */}
+    {/* DMIT banner */}
     <section className="relative overflow-hidden bg-burgundy text-cream">
       <div
         className="pointer-events-none absolute inset-y-0 right-0 w-1/2 bg-linear-to-l from-burgundy-deep/70 to-transparent"
@@ -105,7 +117,6 @@ export const Home = () => (
       <Container width="wide" className="relative py-14 lg:py-16">
         <div className="grid items-center gap-10 lg:grid-cols-[1.1fr_0.9fr_auto] lg:gap-12">
           <div className="flex flex-col gap-4">
-            <Eyebrow onDark>Featured Service</Eyebrow>
             <h2 className="text-3xl font-semibold text-cream sm:text-4xl lg:text-[2.75rem]">
               {dmit.title}
             </h2>
@@ -123,6 +134,7 @@ export const Home = () => (
 
           <div className="relative">
             <Media
+              src={images.homeDmit}
               label="Child portrait — DMIT"
               alt=""
               className="aspect-4/3 w-full rounded-[2rem_999px_999px_2rem] shadow-[var(--shadow-lift)]"
@@ -147,57 +159,49 @@ export const Home = () => (
             </li>
           ))}
         </ul>
+
+        {dmit.dataNotice && (
+          <p className="mt-6 flex items-start gap-2.5 rounded-xl border border-cream/20 bg-burgundy-deep/40 px-4 py-3 text-sm text-cream/90">
+            <ShieldCheck className="mt-0.5 size-4 shrink-0 text-rose-soft" strokeWidth={1.6} aria-hidden />
+            {dmit.dataNotice}
+          </p>
+        )}
       </Container>
     </section>
 
     {/* Why choose Fenix */}
     <Section tone="warm">
-      <div className="grid gap-10 lg:grid-cols-[1.35fr_0.65fr] lg:gap-14">
-        <div className="flex flex-col gap-8">
-          <SectionHeading
-            eyebrow="Why Fenix"
-            title={
-              <>
-                A Trusted Partner in Your <span className="script font-normal">Learning</span> and
-                Growth Journey
-              </>
-            }
-          />
-          <ul className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-            {differentiators.map((value, index) => (
-              <Reveal as="li" key={value.title} delay={index * 70}>
-                <div className="flex h-full flex-col gap-2 rounded-2xl border border-rose/25 bg-cream p-5">
-                  <span className="flex size-10 items-center justify-center rounded-xl bg-rose-mist text-burgundy">
-                    <TrendingUp className="size-4" strokeWidth={1.6} aria-hidden />
-                  </span>
-                  <h3 className="font-display text-base font-semibold text-burgundy">{value.title}</h3>
-                  <p className="text-sm leading-relaxed text-ink-soft">{value.body}</p>
-                </div>
-              </Reveal>
-            ))}
-          </ul>
-        </div>
-
-        <div className="relative flex flex-col gap-5">
-          <Media
-            label="Horizon — aspiration"
-            alt=""
-            tone="sage"
-            className="aspect-3/4 w-full rounded-[999px_999px_2rem_2rem] shadow-[var(--shadow-card)]"
-          />
-          <ScriptAccent className="text-burgundy">
-            New Skills,
-            <br />
-            Brighter Horizons
-          </ScriptAccent>
-        </div>
+      <div className="flex flex-col gap-8">
+        <SectionHeading
+          eyebrow="Why Fenix"
+          title={
+            <>
+              A Trusted Partner in Your <span className="script font-normal">Learning</span> and
+              Growth Journey
+            </>
+          }
+        />
+        <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+          {differentiators.map((value, index) => (
+            <Reveal as="li" key={value.title} delay={index * 70}>
+              <div className="flex h-full flex-col gap-2 rounded-2xl border border-rose/25 bg-cream p-5">
+                <span className="flex size-10 items-center justify-center rounded-xl bg-rose-mist text-burgundy">
+                  <TrendingUp className="size-4" strokeWidth={1.6} aria-hidden />
+                </span>
+                <h3 className="font-display text-base font-semibold text-burgundy">{value.title}</h3>
+                <p className="text-sm leading-relaxed text-ink-soft">{value.body}</p>
+              </div>
+            </Reveal>
+          ))}
+        </ul>
       </div>
     </Section>
 
-    <StatBand quote="Guiding you at every step, from self-discovery to success." />
+    <QuoteBand quote="Guiding you at every step, from self-discovery to success." />
 
     <ProcessSection
-      eyebrow="Understand. Assess. Guide. Develop."
+      steps={homeProcess}
+      eyebrow="Understand. Assess. Guide. Discuss."
       title={
         <>
           A Practical Approach to <span className="script font-normal">Growth</span>
@@ -220,7 +224,7 @@ export const Home = () => (
           training programme or learning experience, we would appreciate you sharing your
           experience.
         </p>
-        <ButtonLink to="/contact" variant="secondary" arrow className="mt-2">
+        <ButtonLink to="/reviews" variant="secondary" arrow className="mt-2">
           Leave a Review
         </ButtonLink>
       </div>
@@ -279,8 +283,6 @@ export const Home = () => (
         .
       </p>
     </Section>
-
-    <InsightsSection />
 
     <FaqSection />
 

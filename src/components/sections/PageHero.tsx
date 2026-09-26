@@ -17,6 +17,7 @@ export const PageHero = ({
   script,
   mediaLabel,
   mediaSrc,
+  mediaClassName,
   chips,
   compact = false,
 }: {
@@ -28,6 +29,8 @@ export const PageHero = ({
   script?: ReactNode
   mediaLabel?: string
   mediaSrc?: string
+  /** Extra classes for the hero <img>, e.g. to adjust the crop */
+  mediaClassName?: string
   /** The small reassurance items under the hero copy */
   chips?: { icon: ReactNode; label: string }[]
   compact?: boolean
@@ -103,6 +106,7 @@ export const PageHero = ({
               />
               <Media
                 src={mediaSrc}
+                imgClassName={mediaClassName}
                 label={mediaLabel ?? 'Hero imagery'}
                 alt=""
                 className="relative aspect-4/3 w-full rounded-[12rem_2rem_2rem_12rem] shadow-[var(--shadow-lift)]"

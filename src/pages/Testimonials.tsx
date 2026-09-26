@@ -6,7 +6,6 @@ import { Reveal } from '../components/ui/Reveal'
 import { ScriptAccent } from '../components/ui/ScriptAccent'
 import { Eyebrow } from '../components/ui/Eyebrow'
 import { ButtonLink } from '../components/ui/Button'
-import { StatBand } from '../components/ui/StatBand'
 import { PageHero } from '../components/sections/PageHero'
 import { PartnersStrip } from '../components/sections/PartnersStrip'
 import { CtaBand } from '../components/sections/CtaBand'
@@ -46,7 +45,7 @@ export const Testimonials = () => (
         </>
       }
       body="The most meaningful measure of any learning experience is the difference it makes to the people who take part. Explore experiences and feedback from students, parents, professionals and organisations who have engaged with Fenix Learning Services."
-      primary={{ label: 'Leave a Review', to: '/contact' }}
+      primary={{ label: 'Leave a Review', to: '/reviews' }}
       script={
         <>
           Meaningful
@@ -68,9 +67,10 @@ export const Testimonials = () => (
         }
         align="center"
       />
-      <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {/* Masonry columns, since the testimonials vary a lot in length */}
+      <div className="mt-12 gap-6 sm:columns-2 lg:columns-3">
         {testimonials.map((item, index) => (
-          <Reveal key={item.name} delay={(index % 3) * 80}>
+          <Reveal key={item.name} delay={(index % 3) * 80} className="mb-6 break-inside-avoid">
             <TestimonialCard item={item} />
           </Reveal>
         ))}
@@ -115,8 +115,6 @@ export const Testimonials = () => (
       </ul>
     </Section>
 
-    <StatBand />
-
     {/* Review invitation */}
     <Section tone="cream" width="narrow" className="py-14">
       <div className="flex flex-col items-center gap-4 text-center">
@@ -128,7 +126,7 @@ export const Testimonials = () => (
           If you have participated in a Fenix programme, training session or counselling
           experience, we&rsquo;d love to hear about it.
         </p>
-        <ButtonLink to="/contact" variant="secondary" arrow className="mt-2">
+        <ButtonLink to="/reviews" variant="secondary" arrow className="mt-2">
           Leave a Review
         </ButtonLink>
       </div>

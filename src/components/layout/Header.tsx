@@ -74,7 +74,7 @@ export const Header = () => {
           <Logo onClick={closeAll} />
 
           <nav aria-label="Primary" className="hidden xl:block">
-            <ul className="flex items-center gap-7">
+            <ul className="flex items-center gap-5 2xl:gap-7">
               {primaryNav.map((item) =>
                 item.label === 'Services' ? (
                   <li
@@ -229,6 +229,7 @@ export const Header = () => {
           <ButtonLink to="/contact" className="mt-6 w-full" arrow onClick={closeAll}>
             Enquire Now
           </ButtonLink>
+          <Logo variant="text" onClick={closeAll} className="mx-auto mt-10 h-16" />
         </Container>
       </div>
     </header>

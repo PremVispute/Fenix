@@ -17,7 +17,7 @@ export const PartnersStrip = () => (
         {[...partners, ...partners].map((partner, index) => (
           <li
             key={`${partner}-${index}`}
-            className="flex h-20 w-56 shrink-0 items-center justify-center rounded-xl border border-rose/25 bg-cream px-6 text-center"
+            className="flex h-20 w-64 shrink-0 items-center justify-center rounded-xl border border-rose/25 bg-cream px-6 text-center"
             aria-hidden={index >= partners.length}
           >
             <span className="font-display text-sm font-semibold tracking-wide text-ink-soft">

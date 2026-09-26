@@ -84,6 +84,7 @@ export const ServiceCategory = () => {
           )
         }
         mediaLabel={`${meta.title} — hero`}
+        mediaSrc={meta.image}
         compact
       />
 

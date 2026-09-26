@@ -17,7 +17,11 @@ const sections: PolicySection[] = [
     after: 'We only ask for information that is relevant to responding to your enquiry.',
   },
   {
-    title: '2. How We Use Your Information',
+    title: '2. Biometric Data \u2014 Never Stored',
+    body: 'Some assessments, such as DMIT and IRIS Analysis, involve capturing fingerprints or iris images. This data is used only to generate your assessment report and is permanently deleted afterwards. We do not keep, store or share any fingerprints, iris images or other biometric data.',
+  },
+  {
+    title: '3. How We Use Your Information',
     body: 'We may use the information you provide to:',
     list: [
       'Respond to your enquiry',
@@ -28,23 +32,23 @@ const sections: PolicySection[] = [
     after: 'We do not sell your personal information.',
   },
   {
-    title: '3. How We Protect Your Information',
+    title: '4. How We Protect Your Information',
     body: 'We take reasonable steps to keep the information you provide secure and prevent unauthorised access or misuse. However, no method of transmitting information online can be guaranteed to be completely secure.',
   },
   {
-    title: '4. Third-Party Services',
+    title: '5. Third-Party Services',
     body: 'Our website may use third-party services such as website hosting, forms, analytics or communication tools. These services may process information as necessary to provide their functions. We may also provide links to external websites, whose privacy practices are governed by their own policies.',
   },
   {
-    title: '5. Your Choices',
+    title: '6. Your Choices',
     body: 'You may contact us if you would like to ask about, update or request deletion of personal information you have provided to us, subject to applicable legal requirements.',
   },
   {
-    title: '6. Contact Us',
+    title: '7. Contact Us',
     body: `If you have any questions about this Privacy Policy or how your information is handled, please contact ${site.name} by email at ${site.contact.email} or by phone on ${site.contact.phone}.`,
   },
   {
-    title: '7. Updates to This Policy',
+    title: '8. Updates to This Policy',
     body: 'We may update this Privacy Policy from time to time. Any changes will be published on this page with an updated date.',
   },
 ]

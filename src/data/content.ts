@@ -1,136 +1,127 @@
+import { images, videos } from './images'
+
 export interface Testimonial {
-  quote: string
+  /** Paragraphs of the quote; a nested array renders as a bulleted list */
+  quote: (string | string[])[]
   name: string
-  role: string
-  rating: number
+  role?: string
+  rating?: number
 }
 
 export const testimonials: Testimonial[] = [
   {
-    quote:
-      'The DMIT assessment gave us incredible insight into my daughter’s strengths. For the first time we were talking about her future with facts instead of guesswork.',
-    name: 'Ritu Sharma',
-    role: 'Parent, Grade 9 Student',
-    rating: 5,
+    quote: [
+      'I had done DMIT for my son. The result was accurate. Moreover, it gives us which field is good and which will not work out. It is an investment for your child.',
+    ],
+    name: 'Amit J Chhabria',
+    role: 'Parent \u2014 DMIT Assessment',
   },
   {
-    quote:
-      'The soft skills training helped me communicate with confidence and present better at work. Highly recommended for any early-career professional.',
-    name: 'Arjun Mehta',
-    role: 'Working Professional',
-    rating: 5,
+    quote: [
+      'I had attended the Campus to Corporate workshop conducted by Mr. Sumeet Bhatia in Feb 2023. The workshop helped me in preparation for my corporate life and thanks to the workshop I was able to get a decent job in an MNC in April.',
+      'Thank you Mr. Bhatia & God bless you. Will definitely recommend your workshop to my friends and colleagues.',
+    ],
+    name: 'Richi',
+    role: 'Campus to Corporate Workshop',
   },
   {
-    quote:
-      'A very well-structured and engaging session. Highly recommended for students who are anxious about choosing their career path.',
-    name: 'Sneha Iyer',
-    role: 'Student, Grade 12',
-    rating: 5,
+    quote: [
+      'Recently I attended a 6-day program on Campus to Corporate by Mr. Sumeet Bhatia.',
+      'It was a detailed program covering topics like interview skills, resume writing, problem solving and decision making, leadership skills, effective communication and body language skills. I admire the way the content was put in such a concise and easy-to-understand manner. Mr. Bhatia conducted the session really well and it was made simple for us to absorb and retain the knowledge learnt.',
+      'Apart from the topics mentioned, there was a lot of additional information shared which was extremely useful for us. The sessions were very informative, knowledgeable and helpful with a lot of learning takeaways.',
+      'Thank you so much Sumeet ji.',
+    ],
+    name: 'Dr. Alpanna',
+    role: 'Campus to Corporate Programme',
   },
   {
-    quote:
-      'The career counselling sessions helped me gain clarity and confidence in my next steps. I finally understood why certain subjects came easily to me.',
-    name: 'Karthik Rao',
-    role: 'Young Professional',
-    rating: 5,
+    quote: [
+      'I would like to thank Mr. Sumeet Bhatia for the excellent DMIT test done on my daughter who was confused about what stream of studies suits her.',
+      'After the test and excellent consultation done by Mr. Sumeet, she has a clear idea of her career line now.',
+      'Thank you Sumeet ji for the wonderful and patient hearing. I recommend all parents having kids above the age of 6 to get the DMIT test which will help us understand the kids\u2019 inclination.',
+      'Wish you all the very best!',
+    ],
+    name: 'Uma Khoday',
+    role: 'BNI Samvrudhi, Bangalore Rural',
   },
   {
-    quote:
-      'We ran the campus-to-corporate programme across two batches. The difference in how our students carried themselves in interviews was obvious.',
-    name: 'Dr. Meera Nair',
-    role: 'Placement Head, Partner College',
-    rating: 5,
+    quote: [
+      'Conducted DMIT and Psychometric Tests for 2 of my nieces \u2014 they are very happy and impressed about the results and the quality of the personal interaction and analysis given by Mr. Sumeet. Appreciate the efforts.',
+    ],
+    name: 'Manjunath G Vinod',
+    role: 'DMIT & Psychometric Assessment',
   },
   {
-    quote:
-      'Structured, patient and genuinely invested in the outcome. My IELTS band moved from 6.5 to 7.5 in seven weeks.',
-    name: 'Fatima Sheikh',
-    role: 'IELTS Candidate',
-    rating: 5,
+    quote: [
+      'I am extremely grateful for the invaluable guidance and insights provided by Sumeet Bhatia through the Dermatoglyphics Multiple Intelligence Test (DMIT) for my son. Sumeet\u2019s expertise in analyzing my son\u2019s unique fingerprints and correlating them with his innate talents and abilities has been truly enlightening.',
+      'Thanks to Sumeet\u2019s thorough assessment, we gained a deeper understanding of my son\u2019s strengths, weaknesses, and learning preferences. This knowledge has not only helped us tailor his education and extracurricular activities to align with his natural inclinations but has also boosted his confidence and motivation.',
+      'I am delighted to share that since implementing Sumeet\u2019s recommendations, my son has shown remarkable progress in both academic and personal spheres. His enhanced self-awareness has empowered him to excel in areas where he previously struggled, and he now approaches challenges with renewed enthusiasm and determination.',
+      'I wholeheartedly recommend Sumeet Bhatia to any parent seeking to unlock their child\u2019s full potential and nurture their innate talents. His expertise in DMIT is truly transformative, and I am deeply grateful for the positive impact it has had on my son\u2019s development.',
+    ],
+    name: 'A Client',
+    role: 'Parent \u2014 DMIT Assessment',
+  },
+  {
+    quote: [
+      'Sumeet was a thorough professional and very prompt on responding to my referral. He has studied my son so well and given a very satisfactory DMIT report. Strongly recommend all to try once to believe!',
+    ],
+    name: 'Swapna Deepak',
+    role: 'Parent \u2014 DMIT Assessment',
+  },
+  {
+    quote: [
+      'It was a wonderful experience of Dermatoglyphics Multiple Intelligence Test. It has proved to be an excellent and almost accurate tool that helps in connecting right people around the world for the right role based on the capabilities and inclinations.',
+      'The test was done by Sumeet Bhatia Sir and counselling done to my partner director was a perfect pitch for his career and our business.',
+      'Thank you Sumeet Bhatia Sir.',
+    ],
+    name: 'Sujith Shetty',
+    role: 'DMIT Assessment & Counselling',
+  },
+  {
+    quote: [
+      'For parents worried about their children\u2019s growth (education/work profile) and lifestyle, Fenix Learning Services should be the first step before deciding on which stream the child would be doing well.',
+      'As a parent I had a DMIT test on my daughter and was shocked to know the results on her behaviour and interests all almost matched her present behaviour. We were clear to show more interest and support her in the stream which would help to grow her future.',
+      'We thank Fenix Learning Services for the clarity given and wish them all the best.',
+    ],
+    name: 'Praveein Kumar S.',
+    role: 'Director, Aarmour Surveillance Pvt Ltd',
+  },
+  {
+    quote: [
+      'Thanks for the report and special thanks for the personalized service! I would highly recommend Mr. Sumeet Bhatia\u2019s service. His service actually helps in unravelling the mystery that surrounds many parents with regards to their children\u2019s career choices. This will definitely save our time, energy and money and will help us to be more focused and hence, successful.',
+      'The report given for my husband also helped him understand his strengths and work on his hobbies. He also makes sure that the fingerprint data is deleted after the report.',
+      'Thanks once again for the personal attention and time!!',
+    ],
+    name: 'Swetha Hanumanthgari',
+    role: 'DMIT Assessment',
+  },
+  {
+    quote: [
+      'I\u2019m thrilled to share my exceptional experience with Sumeet Sir\u2019s DMIT (Dermatoglyphic Multiple Intelligence Test) services!',
+      'I recently had the test done for my uncle and his son, and the results have been incredibly insightful. The personalized attention and time invested by Sumeet Sir have made a significant impact on both their lives.',
+      'DMIT has helped:',
+      [
+        'Identify their strengths and weaknesses',
+        'Uncover hidden talents and potential',
+        'Enhance self-awareness and understanding',
+        'Inform tailored strategies for personal and professional growth',
+      ],
+      'Sumeet Sir\u2019s expertise and guidance have been invaluable. His dedication to delivering accurate and actionable results is truly commendable.',
+      'Thank you, Sumeet Sir, for your exceptional service and commitment to empowering individuals through DMIT! Highly recommended!',
+    ],
+    name: 'Syed Mohammed Qasim',
+    role: 'DMIT Assessment',
   },
 ]
-
-export interface Article {
-  slug: string
-  title: string
-  excerpt: string
-  date: string
-  readingTime: string
-  category: string
-  body: string[]
-}
-
-export const articles: Article[] = [
-  {
-    slug: 'choosing-the-right-career-path',
-    title: 'How to Choose the Right Career Path for Your Strengths',
-    excerpt:
-      'Career decisions are rarely made with enough information. Here is a framework for grounding the choice in evidence rather than expectation.',
-    date: '2026-09-12',
-    readingTime: '6 min read',
-    category: 'Career Guidance',
-    body: [
-      'Most career decisions are made at exactly the moment a student has the least information about themselves. A framework helps.',
-      'Start with aptitude, not ambition. Aptitude is the raw material — the things that come more easily to you than they do to other people. Assessments exist to make that visible.',
-      'Layer interest on top. Aptitude without interest becomes a competent, joyless career. Interest without aptitude becomes a frustrating one. The overlap is where to look first.',
-      'Finally, test the shortlist against reality: what does the day-to-day of this work actually involve, and does that sound like a life you want? Conversations with people doing the job are worth more than any brochure.',
-    ],
-  },
-  {
-    slug: 'role-of-assessments-in-student-development',
-    title: 'The Role of Assessments in Student Development',
-    excerpt:
-      'A good assessment does not put a child in a box. It gives the adults around them a shared, specific vocabulary for how that child learns.',
-    date: '2026-09-04',
-    readingTime: '5 min read',
-    category: 'Assessments',
-    body: [
-      'The objection to assessments is usually the same: they reduce a person to a category. Used badly, that is exactly what happens.',
-      'Used well, an assessment does the opposite. It replaces vague judgements — "she is just not a maths person" — with specific, testable observations about how someone processes information.',
-      'The value is in the conversation afterwards. A report nobody interprets is a filing exercise. A report discussed with the student, the parent and the teacher becomes a plan.',
-    ],
-  },
-  {
-    slug: 'essential-soft-skills-for-professionals',
-    title: 'Essential Soft Skills for Today’s Professionals',
-    excerpt:
-      'Technical ability gets people hired. The skills below are what determine how far they go afterwards.',
-    date: '2026-08-21',
-    readingTime: '7 min read',
-    category: 'Training',
-    body: [
-      'Every hiring manager has the same complaint about early-career hires, and it is almost never about technical skill.',
-      'Clear written communication is the highest-leverage skill in most organisations. It compounds: every email, update and document is either doing work for you or creating more of it.',
-      'Then come the harder ones — receiving feedback without defensiveness, disagreeing productively, and knowing when a problem needs escalating rather than absorbing.',
-      'None of these are personality traits. They are practised skills, which is good news for anybody who thinks they do not have them.',
-    ],
-  },
-  {
-    slug: 'talking-to-your-child-about-their-future',
-    title: 'Talking to Your Child About Their Future',
-    excerpt:
-      'The conversation goes better when it starts earlier, stays curious, and is not held the week before a deadline.',
-    date: '2026-08-08',
-    readingTime: '4 min read',
-    category: 'Parenting',
-    body: [
-      'The stream selection conversation is usually held under time pressure, which is the worst possible condition for a decision of that size.',
-      'Start earlier and keep it light. Curiosity questions — what part of that did you enjoy? — gather more useful information than direct ones.',
-      'Separate your anxiety from theirs. Children are remarkably good at detecting which of your questions are really about you.',
-    ],
-  },
-]
-
-export const getArticle = (slug?: string) => articles.find((article) => article.slug === slug)
 
 export const partners = [
-  'Seshadripuram College',
-  'Star Health Insurance',
-  'Sterling Resorts',
-  'Amara Jyothi School',
-  'Canadian School',
-  'Presidency Group',
-  'Nirmala Institute',
+  'Amara Jyothi School \u2014 Bangalore',
+  'Seshadripuram College of Management \u2014 Bangalore',
+  'Star Health Insurance \u2014 Vasai Branch, Mumbai',
+  'BNI \u2014 Vasai Virar',
+  'BNI \u2014 BGNN Bangalore',
+  'VR1 Networking \u2014 Bangalore',
+  'MESCO (Maharashtra Ex Servicemen Cooperative Ltd) \u2014 Pune',
 ]
 
 export const faqs = [
@@ -167,7 +158,7 @@ export const faqs = [
   {
     question: 'Can Fenix help me prepare for IELTS?',
     answer:
-      'Yes. Fenix provides personalised IELTS training covering Listening, Reading, Writing and Speaking, with preparation designed around your learning needs and goals.',
+      'Yes. Fenix provides IELTS training covering Listening, Reading, Writing and Speaking, with preparation designed around your learning needs and goals.',
   },
   {
     question: 'Do you provide training for companies and institutions?',
@@ -251,4 +242,29 @@ export const differentiators = [
     title: 'Learning With Purpose',
     body: 'The focus is not simply on acquiring information, but on developing understanding and skills that can be applied.',
   },
+]
+
+export interface GalleryItem {
+  type: 'photo' | 'video'
+  /** Image path, video file or YouTube link — leave empty to show a placeholder */
+  src?: string
+  /** Poster frame for self-hosted videos */
+  poster?: string
+  caption: string
+}
+
+const g = images.gallery
+
+export const gallery: GalleryItem[] = [
+  { type: 'photo', src: g.parentSession, caption: 'Career guidance session for parents' },
+  { type: 'photo', src: g.bniWorkshop, caption: 'BNI business workshop' },
+  { type: 'video', src: videos.gallery, caption: 'Workshop highlights' },
+  { type: 'photo', src: g.schoolSeminar, caption: 'School seminar' },
+  { type: 'photo', src: g.parentQa, caption: 'Interactive Q&A with parents' },
+  { type: 'photo', src: g.bniRoundtable, caption: 'Roundtable with entrepreneurs' },
+  { type: 'photo', src: g.schoolIntro, caption: 'Introducing Fenix Learning Services' },
+  { type: 'photo', src: g.networkingMeet, caption: 'Business networking meet' },
+  { type: 'photo', src: g.parentDiscussion, caption: 'One-on-one parent discussion' },
+  { type: 'photo', src: g.bniDiscussion, caption: 'Group discussion activity' },
+  { type: 'photo', src: g.bniActivity, caption: 'Participants in action' },
 ]
