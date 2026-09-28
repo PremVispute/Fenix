@@ -1,4 +1,5 @@
-import { useState, type FormEvent } from 'react'
+import { lazy, Suspense, useRef, useState, type FormEvent } from 'react'
+import type HCaptchaWidget from '@hcaptcha/react-hcaptcha'
 import { Check, Globe2, Mail, MapPin, MessageCircle, Phone } from 'lucide-react'
 import { site } from '../data/site'
 import { fieldClass, labelClass } from '../lib/form'
@@ -23,13 +24,57 @@ const helpOptions = [
   'Not Sure — Help Me Choose',
 ]
 
-export const Contact = () => {
-  const [sent, setSent] = useState(false)
+/*
+ * hCaptcha stays off until spam becomes a problem. To switch it on, enable it
+ * in the Web3Forms dashboard and set VITE_HCAPTCHA=true, then rebuild.
+ */
+const captchaEnabled = import.meta.env.VITE_HCAPTCHA === 'true'
+/* Web3Forms' shared hCaptcha site key for free plans. */
+const captchaSitekey = '50b2fe65-b00b-4b9e-ad62-3ba471098be2'
+/* Loaded on demand, so visitors don't download it while captcha is off. */
+const HCaptcha = lazy(() => import('@hcaptcha/react-hcaptcha'))
 
-  /* No backend yet — swap this for the form endpoint when it is ready. */
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+type Status = 'idle' | 'sending' | 'sent' | 'error' | 'captcha'
+
+export const Contact = () => {
+  const [status, setStatus] = useState<Status>('idle')
+  const [captchaToken, setCaptchaToken] = useState('')
+  const captchaRef = useRef<HCaptchaWidget>(null)
+
+  /* Web3Forms emails each submission to the address tied to the access key. */
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    setSent(true)
+    const form = event.currentTarget
+    const data = Object.fromEntries(new FormData(form))
+    if (captchaEnabled && !captchaToken) {
+      setStatus('captcha')
+      return
+    }
+    setStatus('sending')
+
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          ...data,
+          ...(captchaEnabled && { 'h-captcha-response': captchaToken }),
+          access_key: import.meta.env.VITE_WEB3FORMS_ACCESS_KEY,
+          subject: `New enquiry: ${data.interest} — ${data.name}`,
+          from_name: 'Fenix Website',
+        }),
+      })
+      const result = await response.json()
+      if (!result.success) throw new Error(result.message)
+      form.reset()
+      setStatus('sent')
+    } catch {
+      setStatus('error')
+    } finally {
+      // A captcha token only works once, so ask for a fresh one next time.
+      captchaRef.current?.resetCaptcha()
+      setCaptchaToken('')
+    }
   }
 
   return (
@@ -48,7 +93,7 @@ export const Contact = () => {
               body="Tell us what you're looking for and we'll get back to you."
             />
 
-            {sent ? (
+            {status === 'sent' ? (
               <div
                 role="status"
                 className="flex flex-col items-start gap-3 rounded-2xl border border-sage/40 bg-sage-soft/50 p-6"
@@ -64,12 +109,21 @@ export const Contact = () => {
                   </a>
                   .
                 </p>
-                <Button variant="secondary" onClick={() => setSent(false)}>
+                <Button variant="secondary" onClick={() => setStatus('idle')}>
                   Send another enquiry
                 </Button>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+                {/* Honeypot — hidden from people, bots that tick it are rejected by Web3Forms. */}
+                <input
+                  type="checkbox"
+                  name="botcheck"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  className="hidden"
+                  aria-hidden
+                />
                 <div className="grid gap-5 sm:grid-cols-2">
                   <label className={labelClass}>
                     Name *
@@ -125,8 +179,36 @@ export const Contact = () => {
                     placeholder="Tell us a little about what you are looking for."
                   />
                 </label>
-                <Button type="submit" arrow className="self-start">
-                  Submit Enquiry
+                {captchaEnabled && (
+                  <Suspense>
+                    <HCaptcha
+                      ref={captchaRef}
+                      sitekey={captchaSitekey}
+                      reCaptchaCompat={false}
+                      onVerify={(token) => {
+                        setCaptchaToken(token)
+                        setStatus((current) => (current === 'captcha' ? 'idle' : current))
+                      }}
+                      onExpire={() => setCaptchaToken('')}
+                    />
+                  </Suspense>
+                )}
+                {status === 'captcha' && (
+                  <p role="alert" className="text-sm text-burgundy">
+                    Please complete the captcha check before submitting.
+                  </p>
+                )}
+                {status === 'error' && (
+                  <p role="alert" className="text-sm text-burgundy">
+                    Sorry, your enquiry could not be sent. Please try again, or call us on{' '}
+                    <a href={site.contact.phoneHref} className="font-semibold underline">
+                      {site.contact.phone}
+                    </a>
+                    .
+                  </p>
+                )}
+                <Button type="submit" arrow className="self-start" disabled={status === 'sending'}>
+                  {status === 'sending' ? 'Sending…' : 'Submit Enquiry'}
                 </Button>
                 <p className="text-xs leading-relaxed text-ink-soft">
                   By submitting this form, you agree that Fenix Learning Services may use the

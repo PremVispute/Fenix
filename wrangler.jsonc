@@ -1,0 +1,16 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "fenix",
+  "compatibility_date": "2026-09-26",
+  // Redirects www → plain domain, then serves the static build.
+  "main": "./worker/index.ts",
+  // Serve the Vite build, and fall back to index.html so React Router can
+  // handle deep links like /contact. run_worker_first lets the worker see
+  // every request (including real files) so the www redirect always applies.
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": true
+  }
+}
